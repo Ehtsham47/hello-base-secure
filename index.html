@@ -1,10 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .card {
+    background: #111827;
+    padding: 30px;
+    border-radius: 12px;
+    width: 420px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  h2, h3 {
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #3b82f6;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #2563eb;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+  }
+
+  #status, #wallet {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  hr {
+    margin: 20px 0;
+    border: 1px solid #1f2937;
+  }
+</style>
+
   <title>HelloBaseSecure</title>
 </head>
 
 <body>
+  <div class="card">
+
   <h2>HelloBaseSecure (Base)</h2>
 
   <button onclick="connectWallet()">Connect Wallet</button>
@@ -60,5 +123,7 @@
       }
     }
   </script>
+      </div>
 </body>
+
 </html>
