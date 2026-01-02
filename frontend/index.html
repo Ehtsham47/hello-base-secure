@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HelloBaseSecure</title>
+</head>
+
+<body>
+  <h2>HelloBaseSecure (Base)</h2>
+
+  <button onclick="connectWallet()">Connect Wallet</button>
+  <p id="wallet"></p>
+
+  <h3>Stored Message</h3>
+  <p id="message">---</p>
+
+  <button onclick="readMessage()">Read Message</button>
+
+  <h3>Update Message (Owner Only)</h3>
+  <input id="newMessage" placeholder="New message">
+  <button onclick="updateMessage()">Update</button>
+
+  <p id="status"></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.10.0/dist/ethers.umd.min.js"></script>
+
+  <script>
+    const CONTRACT_ADDRESS = "0x789BF4D7a4ee98b65b5B76838420F28fdC256f62";
+
+    const ABI = [
+      "function message() view returns (string)",
+      "function updateMessage(string)"
+    ];
+
+    let provider, signer, contract;
+
+    async function connectWallet() {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      provider = new ethers.BrowserProvider(window.ethereum);
+      signer = await provider.getSigner();
+      contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+      document.getElementById("wallet").innerText =
+        "Connected: " + await signer.getAddress();
+    }
+
+    async function readMessage() {
+      const msg = await contract.message();
+      document.getElementById("message").innerText = msg;
+    }
+
+    async function updateMessage() {
+      try {
+        const text = document.getElementById("newMessage").value;
+        const tx = await contract.updateMessage(text);
+        document.getElementById("status").innerText = "Transaction sent...";
+        await tx.wait();
+        document.getElementById("status").innerText = "Updated!";
+        readMessage();
+      } catch {
+        document.getElementById("status").innerText = "Not authorized";
+      }
+    }
+  </script>
+</body>
+</html>
